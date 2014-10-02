@@ -1,0 +1,48 @@
+#### TEST 1 ####
+
+=> Command: ./sopipa /etc/services cat "grep telnets" test_1 && cat test_1 | cat -e
+
+===== WAY 1 =====
+<---- user ---->
+telnets		992/tcp    # telnet protocol over TLS/SSL$
+telnets		992/udp    # telnet protocol over TLS/SSL$
+
+<-------------->
+
+<---- correction ---->
+telnets		992/tcp    # telnet protocol over TLS/SSL$
+telnets		992/udp    # telnet protocol over TLS/SSL$
+
+<--------------------->
+===>> OK
+===== END OF WAY 1 =====
+
+
+[Test 1 is ok]
+### END OF TEST 1 ###
+
+
+#### TEST 2 ####
+
+=> Command: ./sopipa /etc/passwd "grep -i avahi" "wc -c" test_2 && cat test_2 | cat -e
+
+===== WAY 1 =====
+<---- user ---->
+0$
+
+<-------------->
+
+<---- correction ---->
+0$
+
+<--------------------->
+===>> OK
+===== END OF WAY 1 =====
+
+
+[Test 2 is ok]
+### END OF TEST 2 ###
+
+
+SUCCESS!!!
+prg is alive

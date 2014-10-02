@@ -1,0 +1,30 @@
+Executable name     :       sopipa
+Directory name      :       ex_4
+Suggested time      :       40 minutes.
+Allowed functions   :       All the libc, except for system
+Makefile            :       yes
+
+
+        The program takes 4 parameters:
+            ./sopipa file1 cmd1 cmd2 file2
+        file1 and file2 are file names
+        cmd1 and cmd2 are shell commands with their parameters
+        The execution fo the program has the same effect as the
+        following shell command :
+            < file1 cmd1 | cmd2 > file2
+
+        You do not have to parse the arguments of sopipa.
+        /bin/sh is allowed (to execute cmd1 and cmd2, but not
+        to make the pipe or the redirections).
+        You HAVE to use pipe, temporary files are FORBIDDEN. You
+        have to clearly make the pipe and make both redirections
+        (the exercise is not about finding executables and parsing
+        arguments ...)
+
+
+Examples:
+(jog@almarita) ./sopipa infile "ls -l" "wc -l" outfile
+will do the same thing as "< infile ls -l | wc -l > outfile" in sh
+
+(jog@almarita) ./sopipa infile "grep a1" "wc -w" outfile
+will do the same thing as "< infile grep a1 | wc -w > outfile" in sh
