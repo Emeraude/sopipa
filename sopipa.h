@@ -16,7 +16,4 @@
 # define CMD2		av[3]
 # define FILE2		av[4]
 
-# define SUCCESS	0
-# define FAILURE	1
-
 #endif /* !SOPIPA_H_ */
