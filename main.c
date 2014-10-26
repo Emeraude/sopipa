@@ -9,32 +9,29 @@
 */
 
 #include <unistd.h>
+#include <stddef.h>
 #include <fcntl.h>
 #include "sopipa.h"
 
-static inline int	sopipa(const char **av)
+int	main(const int ac, const char **av)
 {
-  int			pipefd[2];
-  int			infd;
-  int			outfd;
-  pid_t			pid;
+  int	pipefd[2];
+  int	infd;
+  int	outfd;
+  pid_t	pid;
 
-  return ((((infd = open(FILE1, O_RDONLY)) == -1
-	    || (outfd = creat(FILE2, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1
-	    || dup2(infd, 0) == -1
-	    || pipe(pipefd) == -1
-	    || (pid = fork()) == -1))
+  return ((ac < 5
+	   || (infd = open(FILE1, O_RDONLY)) == -1
+	   || (outfd = creat(FILE2, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1
+	   || dup2(infd, 0) == -1
+	   || pipe(pipefd) == -1
+	   || (pid = fork()) == -1)
 	  || ((pid == 0)
 	      && ((close(pipefd[0]) == -1
 		   || dup2(pipefd[1], 1) == -1
-		   || execlp("/bin/sh", "/bin/sh", "-c", CMD1, (void *)0) == -1)))
-	  || ((close(pipefd[1]) == -1
-	       || dup2(pipefd[0], 0) == -1
-	       || dup2(outfd, 1) == -1
-	       || execlp("/bin/sh", "/bin/sh", "-c", CMD2, (void *)0) == -1)));
-}
-
-int			main(const int ac, const char **av)
-{
-  return ((ac < 5) ? FAILURE : sopipa(av));
+		   || execlp("/bin/sh", "/bin/sh", "-c", CMD1, NULL) == -1)))
+	  || (close(pipefd[1]) == -1
+	      || dup2(pipefd[0], 0) == -1
+	      || dup2(outfd, 1) == -1
+	      || execlp("/bin/sh", "/bin/sh", "-c", CMD2, NULL) == -1));
 }
