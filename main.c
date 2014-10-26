@@ -27,9 +27,9 @@ int	main(const int ac, const char **av)
 	   || pipe(pipefd) == -1
 	   || (pid = fork()) == -1)
 	  || ((pid == 0)
-	      && ((close(pipefd[0]) == -1
-		   || dup2(pipefd[1], 1) == -1
-		   || execlp("/bin/sh", "/bin/sh", "-c", CMD1, NULL) == -1)))
+	      && (close(pipefd[0]) == -1
+		  || dup2(pipefd[1], 1) == -1
+		  || execlp("/bin/sh", "/bin/sh", "-c", CMD1, NULL) == -1))
 	  || (close(pipefd[1]) == -1
 	      || dup2(pipefd[0], 0) == -1
 	      || dup2(outfd, 1) == -1
